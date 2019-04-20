@@ -68,26 +68,57 @@ def plot_hist(column):
     """
     Plots a histogram of the inserted data
     """
+    # Forms the histogram
     column.plot.hist()
+
+    # Adds a title, name for an x-axis and a grid
     plt.title('GDP Data')
+    plt.xlabel('GDP (in dollars)')
     plt.grid(True)
+
+    # Shows the histogram
     plt.show()
 
 def plot_box(column):
     """
     Plots a boxplot of the inserted data
     """
+    # Forms the boxplot
     column.plot.box()
+
+    # Adds a title and a grid
     plt.title('Infant Mortality')
     plt.grid(True)
+
+    # Shows the boxplot
+    plt.show()
+
+def plot_scatter(column1, column2):
+    """
+    Plots a scatterplot
+    """
+    # Forms the scatterplot
+    plt.scatter(column1, column2)
+
+    # Adds a title and a grid
+    plt.title('GDP per capita/Infant Mortality')
+    plt.xlabel('GDP per capita (in dollars)')
+    plt.ylabel('Infant Mortality (per 1000 births)')
+    plt.grid(True)
+
+    # Shows the scatterplot
     plt.show()
 
 
 if __name__ == '__main__':
     data = load_data('input.csv')
-    des_stat(data['GDP ($ per capita) dollars'])
-    des_stat(data['Infant mortality (per 1000 births)'])
+    GDP = des_stat(data['GDP ($ per capita) dollars'])
+    infant_mor = des_stat(data['Infant mortality (per 1000 births)'])
     plot_hist(data['GDP ($ per capita) dollars'])
     plot_box(data['Infant mortality (per 1000 births)'])
+    plot_scatter(GDP, infant_mor)
+
+    # Transforms the data to a JSON file
+    data.to_json("datafile.json", orient="index")
 
 

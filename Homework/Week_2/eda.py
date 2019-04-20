@@ -15,7 +15,6 @@ def load_data(filename):
     Load csv data into panda
     """
 
-
     # Loads the necessary columns from the csv into panda
     data = (pd.read_csv(filename, na_values = ['no info', '.', 'unknown']))
 
@@ -59,9 +58,9 @@ def des_stat(column):
     print("The mode is:", mode)
     print("The standard deviation is:", stan_dev)
 
-    column.describe()
-    #quanitles
-
+    # Prints the Five Number Summary
+    describe = column.describe()
+    print(describe)
 
 def plot_hist(column):
     """
@@ -72,9 +71,20 @@ def plot_hist(column):
     plt.grid(True)
     plt.show()
 
+def plot_box(column):
+    """
+    Plots a boxplot of the inserted data
+    """
+    column.plot.box()
+    plt.title('Infant Mortality')
+    plt.grid(True)
+    plt.show()
+
+
 if __name__ == '__main__':
     data = load_data('input.csv')
     des_stat(data['GDP ($ per capita) dollars'])
     plot_hist(data['GDP ($ per capita) dollars'])
+    plot_box(data['Infant mortality (per 1000 births)'])
 
 

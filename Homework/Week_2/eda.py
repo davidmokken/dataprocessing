@@ -86,8 +86,8 @@ def plot_box(column):
 if __name__ == '__main__':
     data = load_data('input.csv')
     des_stat(data['GDP ($ per capita) dollars'])
-    describe = des_stat(data['Infant mortality (per 1000 births)'])
+    des_stat(data['Infant mortality (per 1000 births)'])
     plot_hist(data['GDP ($ per capita) dollars'])
-    plot_box(describe)
+    plot_box(data['Infant mortality (per 1000 births)'])
 
 

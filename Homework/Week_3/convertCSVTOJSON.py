@@ -5,7 +5,6 @@
 import csv
 import pandas as pd
 import json
-import matplotlib.pylot as plt
 
 def load_data(filename):
     """
@@ -13,7 +12,7 @@ def load_data(filename):
     """
 
     # Loads the necessary columns from the csv into panda
-    data = (pd.read_csv(filename, na_values = ['no info', 'unknown']))
+    data = pd.read_csv(filename, na_values = ['no info', 'unknown'], encoding = "latin")
 
     # Cleans the data
     data = data[['year', 'film', 'actor', 'characters', 'imdb', \
@@ -26,4 +25,4 @@ def load_data(filename):
     
 if __name__ == '__main__':
     data = load_data('oscarscriptdiversityanalysis.csv')
-    data.to_json("oscars.json", orient="index")
+    data.to_json("data.json", orient="index")

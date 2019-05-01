@@ -1,0 +1,127 @@
+<!--David Mokken
+    10770798
+    Purpose of file: Check the diversity of oscar movies in the 3 years
+-->
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <title>Line Chart</title>
+    </head>
+    
+    <body>
+
+        <h1>Oscar Best Picture nominated movies in the years 1989, 2015, 2017</h1>
+        <p>Has the diversity in Oscar nominated movies increased over the years?</p>
+        <p><a href="https://github.com/BuzzFeedNews/2018-03-oscars-script-diversity-analysis/blob/master/data/actor-metrics.csv">Dataset</a></p>
+
+        <canvas id="chart" width="500" height="500"></canvas>
+
+        <script>
+
+            function createTransform(domain, range){
+                var domain_min = domain[0]
+                var domain_max = domain[1]
+                var range_min = range[0]
+                var range_max = range[1]
+    
+                // Formulas to calculate the alpha and the beta
+                var alpha = (range_max - range_min) / (domain_max - domain_min)
+                var beta = range_max - alpha * domain_max
+    
+                // Returns the function for the linear transformation (y= a * x + b)
+                return function(x){
+                    return alpha * x + beta;
+                }
+            }
+
+            // Loads the JSON data in the html file
+            var fileName = "data.json";
+            var txtFile = new XMLHttpRequest();
+            txtFile.onreadystatechange = function() {
+                if (txtFile.readyState === 4 && txtFile.status == 200) {
+                    console.log(JSON.parse(txtFile.responseText));
+
+                    // Code used to devide the code over two scripts
+                    part2(JSON.parse(txtFile.responseText));
+                }
+            }
+            txtFile.open("GET", fileName);
+            txtFile.send();
+
+        </script>
+
+        <script>
+            function part2(data){
+                
+                // Create new dicts for the the seperate amounts
+                let set_sex = {
+                    "1989": {"male": 0, "female": 0},
+                    "2015": {"male": 0, "female": 0},
+                    "2017": {"male": 0, "female": 0}
+                }
+
+                let set_race = {
+                    "1989": {"White": 0, "POC": 0},
+                    "2015": {"White": 0, "POC": 0},
+                    "2017": {"White": 0, "POC": 0}
+                }
+
+                // Loops over the different actors in the datafile 
+                //and shows data such as year, film 
+                for (actor in data){
+                    set_sex[data[actor]["year"]][data[actor]["gender"]]++;
+                    set_race[data[actor]["year"]][data[actor]["race_simple"]]++;                   
+                }
+                
+                // Gives the percentages of male and female actors in film
+                for (year in set_sex){
+                    total_people = Number(set_sex[year]["male"] + set_sex[year]["female"]);
+                    set_sex[year]["male"] = Number(set_sex[year]["male"] / total_people * 100)
+                    set_sex[year]["female"] = Number(set_sex[year]["female"] / total_people * 100)
+                }
+                
+                // Gives the percentages of white and people of color actors in films
+                for (year in set_race){
+                    total_race = set_race[year]["White"] + set_race[year]["POC"];
+                    set_race[year]["White"] = set_race[year]["White"] / total_race * 100
+                    set_race[year]["POC"] = set_race[year]["POC"] / total_race * 100
+                }
+
+                // Define the variables in scale values
+                let x_scale = createTransform([1989, 2017], [50, 400])
+                let y_scale = createTransform([0, 100], [400, 50]) 
+
+                // Calls the canvas context
+                const canvas = document.getElementById('chart');
+                const ctx = canvas.getContext('2d');
+                
+                // Draws the x-axis
+                ctx.lineWidth = 5;
+                ctx.beginPath();
+                ctx.moveTo(50, 300);
+                ctx.lineTo(300, 300);
+                ctx.fillText('Year', 150, 320)
+                
+                // Draws the y-axis
+                ctx.moveTo(50, 300);
+                ctx.lineTo(50, 50);
+                ctx.stroke();
+                ctx.closePath();
+
+                // Plot and draw lines
+                ctx.beginPath();
+                for (year in set_sex){
+                    ctx.lineTo(x_scale(set_sex[year]), y_scale(set_sex[year]["male"]));
+                    ctx.stroke();
+                }
+                ctx.closePath();
+                
+
+            }
+        </script>
+
+
+    </body>
+
+</html>

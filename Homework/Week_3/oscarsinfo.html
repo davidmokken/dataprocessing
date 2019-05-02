@@ -13,9 +13,10 @@
 
         <h1>Oscar Best Picture nominated movies in the years 1989, 2015, 2017</h1>
         <p>Has the diversity in Oscar nominated movies increased over the years?</p>
+        <p>The lines indicates the percentages of actors that are male, female, white and people of color in Best picture nominated films.</p>
         <p><a href="https://github.com/BuzzFeedNews/2018-03-oscars-script-diversity-analysis/blob/master/data/actor-metrics.csv">Dataset</a></p>
 
-        <canvas id="chart" width="500" height="500"></canvas>
+        <canvas id="chart" width="1100" height="1100"></canvas>
 
         <script>
 
@@ -59,65 +60,132 @@
                     "1989": {"male": 0, "female": 0},
                     "2015": {"male": 0, "female": 0},
                     "2017": {"male": 0, "female": 0}
-                }
+                };
 
                 let set_race = {
                     "1989": {"White": 0, "POC": 0},
                     "2015": {"White": 0, "POC": 0},
                     "2017": {"White": 0, "POC": 0}
-                }
+                };
 
                 // Loops over the different actors in the datafile 
                 //and shows data such as year, film 
                 for (actor in data){
                     set_sex[data[actor]["year"]][data[actor]["gender"]]++;
                     set_race[data[actor]["year"]][data[actor]["race_simple"]]++;                   
-                }
+                };
                 
                 // Gives the percentages of male and female actors in film
                 for (year in set_sex){
                     total_people = Number(set_sex[year]["male"] + set_sex[year]["female"]);
-                    set_sex[year]["male"] = Number(set_sex[year]["male"] / total_people * 100)
-                    set_sex[year]["female"] = Number(set_sex[year]["female"] / total_people * 100)
-                }
+                    set_sex[year]["male"] = Number(set_sex[year]["male"] / total_people * 100);
+                    set_sex[year]["female"] = Number(set_sex[year]["female"] / total_people * 100);
+                };
+                console.log(set_sex);
                 
+
                 // Gives the percentages of white and people of color actors in films
                 for (year in set_race){
                     total_race = set_race[year]["White"] + set_race[year]["POC"];
-                    set_race[year]["White"] = set_race[year]["White"] / total_race * 100
-                    set_race[year]["POC"] = set_race[year]["POC"] / total_race * 100
-                }
+                    set_race[year]["White"] = set_race[year]["White"] / total_race * 100;
+                    set_race[year]["POC"] = set_race[year]["POC"] / total_race * 100;
+                };
 
                 // Define the variables in scale values
-                let x_scale = createTransform([1989, 2017], [50, 400])
-                let y_scale = createTransform([0, 100], [400, 50]) 
+                let x_scale = createTransform([1989, 2017], [50, 1000]);
+                let y_scale = createTransform([0, 100], [550, 50]);
 
                 // Calls the canvas context
                 const canvas = document.getElementById('chart');
                 const ctx = canvas.getContext('2d');
+                keys = Object.keys(set_sex);
+                keys2 = Object.keys(set_race);
                 
                 // Draws the x-axis
-                ctx.lineWidth = 5;
+                ctx.lineWidth = 1;
                 ctx.beginPath();
-                ctx.moveTo(50, 300);
-                ctx.lineTo(300, 300);
-                ctx.fillText('Year', 150, 320)
-                
+                ctx.moveTo(50, 550);
+                ctx.lineTo(1000, 550);
+                ctx.fillText('Year', 500, 580);
+
+                // Draws lines on x-axis
+                for (x = 1989; x < 2018; x += 1){
+                    ctx.moveTo(x_scale(x), 550);
+                    ctx.lineTo(x_scale(x), 560);
+                    ctx.fillText(x, x_scale(x), 570);
+                    ctx.stroke(); 
+                };
+
                 // Draws the y-axis
-                ctx.moveTo(50, 300);
+                ctx.moveTo(50, 550);
                 ctx.lineTo(50, 50);
+                ctx.fillText('In %', 25, 20)
                 ctx.stroke();
                 ctx.closePath();
 
-                // Plot and draw lines
-                ctx.beginPath();
-                for (year in set_sex){
-                    ctx.lineTo(x_scale(set_sex[year]), y_scale(set_sex[year]["male"]));
+                // Draws lines on y-axis
+                for (y = 0; y < 110; y += 10){
+                    ctx.moveTo(50, y_scale(y));
+                    ctx.lineTo(40, y_scale(y));
+                    ctx.fillText(y, 25, y_scale(y));
                     ctx.stroke();
-                }
+                };
+ 
+                // Plots and draws the lines for male
+                ctx.beginPath();
+                ctx.moveTo(50, 550);
+                for (index in set_sex){
+                    x = x_scale(index);
+                    y = y_scale(set_sex[index]["male"]);
+                    ctx.strokeStyle = 'blue'
+                    ctx.lineTo(x, y);
+                };
+                ctx.stroke();
                 ctx.closePath();
-                
 
+                // Plots and draws the lines for female
+                ctx.beginPath();
+                ctx.moveTo(50, 550);
+                for (index in set_sex){
+                    x = x_scale(index);
+                    y = y_scale(set_sex[index]["female"]);
+                    ctx.strokeStyle = 'red'
+                    ctx.lineTo(x, y);
+                };
+                ctx.stroke();
+                ctx.closePath();
+
+                // Plots and Draws the lines for white people
+                ctx.beginPath();
+                ctx.moveTo(50, 550);
+                for (index in set_race){
+                    x = x_scale(index);
+                    y = y_scale(set_race[index]["White"]);
+                    ctx.strokeStyle = 'green'
+                    ctx.lineTo(x, y);
+                };
+                ctx.stroke();
+                ctx.closePath();
+
+                // Plots and Draws the lines for people of color
+                ctx.beginPath();
+                ctx.moveTo(50, 550);
+                for (index in set_race){
+                    x = x_scale(index);
+                    y = y_scale(set_race[index]["POC"]);
+                    ctx.strokeStyle = 'yellow'
+                    ctx.lineTo(x, y);
+                };
+                ctx.stroke();
+                ctx.closePath();
+
+                // Draws legenda
+                ctx.beginPath();
+                ctx.fillText("White", 1010, 120);
+                ctx.fillText("Male", 1010, 211);
+                ctx.fillText("Female", 1010, 388);
+                ctx.fillText("People of Color", 1010, 484);
+                ctx.stroke();
             }
         </script>
 

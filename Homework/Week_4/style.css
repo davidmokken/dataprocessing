@@ -1,3 +1,22 @@
-h2.kaas{
-    
+div.headtext{
+    text-align: left;
+    font-family: sans-serif;
+    color:  #108ee2;    
 }
+
+.bars.hover {
+    fill: blue;
+}
+
+.hover {
+    position: absolute;
+    display: none;
+    font-family: sans-serif;
+    min-width: 80px;
+    height: auto;
+    background: #D3D3D3;
+    border: 2px solid #108ee2;
+    padding: 1px;
+    text-align: center;    
+}
+

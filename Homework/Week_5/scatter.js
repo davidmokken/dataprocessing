@@ -77,6 +77,34 @@ function clean_data(data){
 
 function create_scatter(data){
 
+    // Width and Heights
+    var width_svg = 600;
+    var height_svg = 600;
+    var width_chart = 400;
+    var height_chart = 400;
+
+    var svg = d3.select("body")
+                .append("svg")
+                .attr("width", width_svg)
+                .attr("height", height_svg);
+
+    var data = data       
     
+    // Creates scale and variable for x-axis
+
+    // Creates scale and variable for y-axis
+
+    // Add x-axis and its description to scatterplot
+
+    // Add y-axis and its description to scatterplot
+
+    // Draws the circles with the acquired data
+
+
+    var circles = svg.selectAll("circle")
+                    .data(data)
+                    .enter()
+                    .append("circles")
+
 }
 

@@ -64,7 +64,7 @@ d3.json("data.json").then(function(data){
         .call(yAxis)
         .attr("transform", "translate(50, 10)");
 
-    // Descrription of the y-axis
+    // Description of the y-axis
     svg.append("text")
         .attr("transform", "rotate(-90)")
         .attr("y", 25)

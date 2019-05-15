@@ -14,20 +14,14 @@ var GDP = "https://stats.oecd.org/SDMX-JSON/data/SNA_TABLE1/AUS+AUT+BEL+CAN+CHL+
 
 var requests = [d3.json(teensInViolentArea), d3.json(teenPregnancies), d3.json(GDP)];
 
-//var cleaned_data = {};
-
 Promise.all(requests).then(function(response) {
-    // Rename function
-    clean_data(response);
+    cleaned_data = clean_data(response);
+    create_scatter(cleaned_data);
 }).catch(function(e){
     throw(e);
 });
 
 function clean_data(data){
-
-    console.log(transformResponse(data[0]))
-    console.log(transformResponse(data[1]))
-    console.log(transformResponse2(data[2]))
 
     let violence = transformResponse(data[0]);
     let preg = transformResponse(data[1]);
@@ -82,29 +76,76 @@ function create_scatter(data){
     var height_svg = 600;
     var width_chart = 400;
     var height_chart = 400;
+    var max_violence = 25;
+    var max_pregnancy = 30;
 
+    // Creates SVG element
     var svg = d3.select("body")
                 .append("svg")
                 .attr("width", width_svg)
                 .attr("height", height_svg);
 
-    var data = data       
-    
+    var data = data     
+    // var country = Object.keys(data)  
+    console.log(data['Violence'])
+
     // Creates scale and variable for x-axis
+    var xScale = d3.scaleLinear()
+                    .domain([0, max_violence])
+                    //.domain([0, d3.max(data, function(d) { return d.Violence })])
+                    .range([0, width_chart]);
+    var xAxis = d3.axisBottom(xScale);
 
     // Creates scale and variable for y-axis
+    var yScale = d3.scaleLinear()
+                    .domain([0, max_pregnancy])
+                    //.domain([0, d3.max(data, function(d) { return d['Pregnancy']; })])
+                    .range([height_chart, 0]);
+    var yAxis = d3.axisLeft(yScale);
+
+    // Creates the r scale 
+    // var rScale = d3.scaleLinear()
+    //                 .
+
 
     // Add x-axis and its description to scatterplot
+    svg.append("g")
+        .call(xAxis)
+        .attr("transform", "translate(50, 400)");
 
     // Add y-axis and its description to scatterplot
+    svg.append("g")
+        .call(yAxis)
+        .attr("transform", "translate(50, 10)");
+
+    // Description of the y-axis
+    svg.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 25)
+        .style("text-anchor", "end")
+        .attr("font-size", "13px")
+        .attr("font-family", "sans-serif")
+        .text("Teen Pregnancies rate");
+
+    // Description of the x-axis
+    svg.append("text")
+        .attr("transform", "translate(200, 430)")
+        .attr("font-size", "13px")
+        .attr("font-family", "sans-serif")
+        .text("Teen Violence rate");
+    
 
     // Draws the circles with the acquired data
-
-
     var circles = svg.selectAll("circle")
                     .data(data)
                     .enter()
-                    .append("circles")
+                    .append("circle")
+                    .attr("cx", function(d) {
+                        return xScale(d);
+                   })
+                   .attr("cy", function(d) {
+                        return yScale(d);
+                   })
+                   .attr("r", 5);
 
-}
-
+    }

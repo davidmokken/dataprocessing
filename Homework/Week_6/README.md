@@ -7,4 +7,4 @@ To demonstrate the percentage of "believers" vs "non-believers" per province in 
     Also a bar chart for amount of visits to religious instances is shown
     (Maybe a bit much?)
 
-URL: 
+URL: https://opendata.cbs.nl/statline/#/CBS/nl/dataset/83288NED/table?ts=1558549938180

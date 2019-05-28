@@ -1,27 +1,23 @@
-<!--
-    Name: David Mokken
-    Student Number: 10770798
-    Purpose of this file: To demonstrate the percentage of "believers" vs "non-believers" per province in the Netherlands
-    Can be seen for three years. Once clicked on a province, percentage of different faiths is shown in a bar/pie chart
-    Also a bar chart for amount of visits to religious instances is shown
-    (Maybe a bit much?)
-    URL:https://opendata.cbs.nl/statline/#/CBS/nl/dataset/83288NED/table?ts=1558549938180
--->
-
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <title>Religion NL</title>
-        <meta charset="utf-8">
-        <link rel="stylesheet" type="text.css">
-        <script type="text/javascript" src="d3/d3.js"></script>
-    </head>
+<meta charset="utf-8">
+<head>
+    <title>Religion NL</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
 
-    <body>
-        <h2>Religion in the Netherlands</h2>
-        <p>How is religion devided over the provinces?</p>
-        <p>And how many times are people going to religious instances?</p>
-        <script type="text/javascript" src="script.js"></script>
-    </body>
+</head>
+<body>
+    <h2>Religion in the Netherlands</h2>
+    <p>What is the percentage of religious people per provinces?</p>
+    <p>How are the religions devided in the province?</p>
+    
+    <script src="http://d3js.org/d3.v5.min.js"></script>
+    <script src="http://d3js.org/topojson.v1.min.js"></script>
+    <script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
+    <script src="d3-tip.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.10.3/babel.min.js'></script>
+    <script lang='babel' type='text/babel'></script>
+    <script src="datamap.js"></script>
+    <p>Colour scale based on percentage religious people.</p>
 
+</body>
 </html>

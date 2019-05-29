@@ -1,4 +1,6 @@
 // Javascript Piechart
+// David Mokken
+// 10770798
 
 // Constant values
 const width_svg = 700;
@@ -45,7 +47,8 @@ svg_pie.call(tip_pie);
                     })
         
         var data_ready = pie(d3.entries(data))
-
+        
+        // Sorts the data by index
         data_ready.sort(function(a,b){
             return a.index - b.index;
         })
@@ -73,6 +76,9 @@ svg_pie.call(tip_pie);
                         .style('stroke-width',0.3);
                     })
 
+                    // The merge and transition function seem to call for an error in the console.
+                    // However everything does work
+                    // Tim himself couldn't find the problem either and said I should mention it as a comment
                     .merge(u)
                     .transition()
                     .duration(1000)
@@ -95,13 +101,14 @@ svg_pie.call(tip_pie);
                     .remove()
     }
 
+    // Appends a title to the piechart
     svg_pie.append('text')
     .attr('x', 0)
     .attr('y', -200)
     .attr('text-anchor', 'middle')
     .style('font-size', '20px')
     .style('font-family', 'Times New Roman')
-    .text('Division of religion in The Netherlands');
+    .text('At start: Division of religion in The Netherlands as a whole.');
                  
 // Adds a legend                    
 var legend = svg_pie.selectAll(".legend")

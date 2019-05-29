@@ -36,15 +36,15 @@ svg_pie.call(tip_pie);
         delete data.Total;
         
         // Computes the position of each religion on the pie
-        var pie = d3v4.pie()
+        var pie = d3.pie()
                     .value(function(d) {
                         return d.value;
                     })
                     .sort(function(a, b) {
-                        return d3v4.ascending(a.key, b.key);
+                        return d3.ascending(a.key, b.key);
                     })
         
-        var data_ready = pie(d3v4.entries(data))
+        var data_ready = pie(d3.entries(data))
 
         data_ready.sort(function(a,b){
             return a.index - b.index;
@@ -76,7 +76,7 @@ svg_pie.call(tip_pie);
                     .merge(u)
                     .transition()
                     .duration(1000)
-                    .attr('d', d3v4.arc()
+                    .attr('d', d3.arc()
                         .innerRadius(0)
                         .outerRadius(radius_pie)
                     )

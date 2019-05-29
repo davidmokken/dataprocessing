@@ -95,7 +95,6 @@ function ready(error, data, population) {
 
 
   svg.append('path')
-    .datum(topojson.mesh(data.features, (a, b) => a.id !== b.id))
     .attr('class', 'names')
     .attr('d', path);
 }

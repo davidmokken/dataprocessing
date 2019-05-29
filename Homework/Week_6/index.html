@@ -3,21 +3,40 @@
 <head>
     <title>Religion NL</title>
     <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
 </head>
 <body>
     <h2>Religion in the Netherlands</h2>
     <p>What is the percentage of religious people per provinces?</p>
     <p>How are the religions devided in the province?</p>
-    
+
+    <script src="http://d3js.org/d3.v4.min.js"></script>
+    <script>
+        d3v4 = d3;
+    </script>
     <script src="http://d3js.org/d3.v5.min.js"></script>
     <script src="http://d3js.org/topojson.v1.min.js"></script>
     <script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
     <script src="d3-tip.js"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.10.3/babel.min.js'></script>
     <script lang='babel' type='text/babel'></script>
-    <script src="datamap.js"></script>
-    <p>Colour scale based on percentage religious people.</p>
 
+    <div class="row">
+        <div class="col">
+            <div id="datamap"></div>
+            <script src="datamap.js"></script>
+            <p>Colour scale based on percentage religious people.</p>
+        </div>
+        <div class="col">
+            <div id="pie_chart">
+            <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+            <script src="piechart.js"></script>
+            </div>
+        </div>
+    </div>
+    
+    
+    
 </body>
 </html>
